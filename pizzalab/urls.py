@@ -6,8 +6,9 @@ from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
-    path('items/', include('item.urls')),
-    path('categories/', include('category.urls')),
+    path('users/', include('user.urls'), name='users'),
+    path('items/', include('item.urls'), name='items'),
+    path('categories/', include('category.urls'), name='categories'),
 
     path('admin/', admin.site.urls),
     path('openapi', get_schema_view(

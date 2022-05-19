@@ -1,5 +1,6 @@
 from rest_framework import generics
 
+from core.permissions import BaseItemPermission
 from item.models import Item
 from item.serializers import ItemDetailSerializer
 from item.serializers import ItemSerializer
@@ -11,10 +12,11 @@ class BaseItemAPIView(generics.GenericAPIView):
 
 
 class ItemListAPIView(generics.ListCreateAPIView, BaseItemAPIView):
-    pass
+    permission_classes = (BaseItemPermission, )
 
 
 class ItemAPIView(generics.RetrieveUpdateDestroyAPIView, BaseItemAPIView):
     serializer_class = ItemDetailSerializer
+    permission_classes = (BaseItemPermission, )
 
 
