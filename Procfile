@@ -1,1 +1,1 @@
-web: python3 manage.py collectstatic --noinput && wait && python3 manage.py migrate && wait && python3 gunicorn pizzalab.wsgi:application --preload --log-file -
+web: python3 manage.py collectstatic --noinput && wait && python3 manage.py migrate && wait && gunicorn pizzalab.wsgi:application --preload --log-file -
