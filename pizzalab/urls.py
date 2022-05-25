@@ -22,9 +22,9 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path('users/', include('user.urls'), name='users'),
-    path('items/', include('item.urls'), name='items'),
-    path('categories/', include('category.urls'), name='categories'),
+    path('api/users/', include('user.urls'), name='users'),
+    path('api/items/', include('item.urls'), name='items'),
+    path('api/categories/', include('category.urls'), name='categories'),
 
     path('admin/', admin.site.urls),
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
