@@ -17,16 +17,15 @@ if ENVIRONMENT == 'DEVELOPMENT':
     load_dotenv()
 
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'greger')
 
-DEBUG = bool(int(os.environ.get('DEBUG')))
+DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', [])
 ALLOWED_HOSTS = ALLOWED_HOSTS.split() if ' ' in ALLOWED_HOSTS else ALLOWED_HOSTS
 
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS')
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', [])
 CORS_ALLOWED_ORIGINS = CORS_ALLOWED_ORIGINS.split() if ' ' in CORS_ALLOWED_ORIGINS else CORS_ALLOWED_ORIGINS
-
 
 
 PROJECT_APPS = [
@@ -39,7 +38,8 @@ PROJECT_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
-    'corsheaders'
+    'corsheaders',
+    'drf_yasg'
 ]
 
 INSTALLED_APPS = [
@@ -125,8 +125,12 @@ WSGI_APPLICATION = 'pizzalab.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR.joinpath(os.environ.get('DATABASE_NAME')),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DATABASE_NAME'),
+        'USER': os.environ.get('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASS'),
+        'HOST': os.environ.get('DATABASE_HOST'),
+        'PORT': os.environ.get('DATABASE_PORT', 5432)
     }
 }
 

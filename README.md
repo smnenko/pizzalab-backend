@@ -2,7 +2,7 @@
 
 ### Stack of technologies
 - Python 3.10
-- SQLite 3
+- PostgreSQL 14
 
 ### Installation
 1. Install python (skip if installed)
