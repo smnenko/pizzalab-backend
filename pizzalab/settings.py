@@ -22,10 +22,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'greger')
 DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', [])
-ALLOWED_HOSTS = ALLOWED_HOSTS.split() if ' ' in ALLOWED_HOSTS else ALLOWED_HOSTS
+ALLOWED_HOSTS = ALLOWED_HOSTS.split() if ' ' in ALLOWED_HOSTS else [ALLOWED_HOSTS]
 
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', [])
-CORS_ALLOWED_ORIGINS = CORS_ALLOWED_ORIGINS.split() if ' ' in CORS_ALLOWED_ORIGINS else CORS_ALLOWED_ORIGINS
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 PROJECT_APPS = [
@@ -89,6 +88,7 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -178,6 +178,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR.joinpath('deploy', 'static_root')
 STATICFILES_DIRS = [PROJECT_DIR.joinpath('static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
