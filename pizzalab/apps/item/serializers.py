@@ -22,8 +22,6 @@ class ItemSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     caloricity = CaloricitySerializer()
 
-    category_id = serializers.IntegerField(write_only=True)
-
     class Meta:
         model = Item
         fields = '__all__'
@@ -41,9 +39,14 @@ class ItemSerializer(serializers.ModelSerializer):
 
         return item
 
+
+class ItemUpdateSerializer(ItemSerializer):
+    category = serializers.IntegerField(write_only=True)
+
     def update(self, instance, validated_data):
+        fields = validated_data.keys()
         caloricity = validated_data.pop('caloricity', None)
-        category_id = validated_data.pop('category_id', None)
+        category_id = validated_data.pop('category', None)
 
         for key, value in validated_data.items():
             setattr(instance, key, value)
@@ -56,9 +59,5 @@ class ItemSerializer(serializers.ModelSerializer):
                 setattr(instance.caloricity, key, value)
 
             instance.caloricity.save(update_fields=caloricity.keys())
-        instance.save(update_fields=validated_data.keys())
+        instance.save(update_fields=fields)
         return instance
-
-
-class ItemDetailSerializer(ItemSerializer):
-    pass
