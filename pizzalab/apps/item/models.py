@@ -11,6 +11,7 @@ class Item(BaseModel):
     slug = models.SlugField(null=False, unique=True)
     image = models.URLField()
     description = models.TextField()
+    price = models.DecimalField(max_digits=4, decimal_places=2)
 
     category = models.ForeignKey(
         to=Category,
