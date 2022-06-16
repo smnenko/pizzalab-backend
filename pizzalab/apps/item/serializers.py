@@ -20,7 +20,7 @@ class CaloricitySerializer(serializers.ModelSerializer):
 
 class ItemSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
-    caloricity = CaloricitySerializer()
+    caloricity = CaloricitySerializer(required=False)
 
     class Meta:
         model = Item
@@ -29,13 +29,14 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         caloricity = validated_data.pop('caloricity', None)
-        category_id = validated_data.pop('category_id', None)
+        category_id = validated_data.pop('category', None)
 
         category = Category.objects.get(id=category_id)
         item = Item(**validated_data, category=category)
         item.save()
 
-        Caloricity.objects.create(**caloricity, item=item)
+        if caloricity:
+            Caloricity.objects.create(**caloricity, item=item)
 
         return item
 

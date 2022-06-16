@@ -1,6 +1,5 @@
 import os
 import sys
-import logging
 from datetime import timedelta
 from pathlib import Path
 
@@ -25,6 +24,19 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', [])
 ALLOWED_HOSTS = ALLOWED_HOSTS.split() if ' ' in ALLOWED_HOSTS else [ALLOWED_HOSTS]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+SWAGGER_SETTING = {
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        },
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
 
 
 PROJECT_APPS = [
@@ -156,6 +168,7 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
     )
 }
 
