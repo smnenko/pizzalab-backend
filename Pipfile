@@ -19,6 +19,7 @@ drf-yasg = "*"
 psycopg2-binary = "*"
 whitenoise = "*"
 gunicorn = "*"
+pytest-django = "*"
 
 [dev-packages]
 

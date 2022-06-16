@@ -3,6 +3,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from user.models import Address
+from user.models import User
 from user.models import Profile
 
 
@@ -118,3 +119,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
             attrs.pop('password_confirm')
             return attrs
         raise ValidationError('Passwords don\'t match')
+
+    def create(self, validated_data):
+        user = User.objects.create_user(email=validated_data.get('email'))
+        user.set_password(validated_data.get('password'))
+        return user
