@@ -88,7 +88,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return any(i.isupper() for i in password)
 
     def _has_one_lowercase_character(self, password: str):
-        return any(i.isupper() for i in password)
+        return any(i.islower() for i in password)
 
     def _has_one_digit(self, password: str):
         return any(i.isdigit() for i in password)
@@ -121,7 +121,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         raise ValidationError('Passwords don\'t match')
 
     def create(self, validated_data):
-        user = User.objects.create_user(email=validated_data.get('email'))
-        user.set_password(validated_data.get('password'))
-        user.save(update_fields=('password',))
-        return user
+        return User.objects.create_user(
+            email=validated_data.get('email'),
+            password=validated_data.get('password')
+        )
